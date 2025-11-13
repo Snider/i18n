@@ -49,9 +49,7 @@ func newI18nService() (*Service, error) {
 	return s, nil
 }
 
-// New is the constructor for static dependency injection.
-// It creates a Service instance without initializing the core.Runtime field.
-// Dependencies are passed directly here.
+// New creates a new i18n service.
 func New() (*Service, error) {
 	s, err := newI18nService()
 	if err != nil {

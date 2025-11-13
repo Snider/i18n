@@ -14,7 +14,7 @@ func setupRouter() http.Handler {
 		fmt.Fprintf(w, "Hello, world!")
 	})
 
-	fs := http.FileServer(http.Dir("./ui/dist/core-element-template/browser"))
+	fs := http.FileServer(http.Dir("./ui/dist/i18n-element/browser"))
 	mux.Handle("/", fs)
 	return mux
 }

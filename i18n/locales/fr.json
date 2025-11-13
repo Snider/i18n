@@ -4,7 +4,7 @@
 	"app.boot.loaded-runtime": "Application chargée",
 	"app.boot.server-check": "Vérification du serveur",
 	"app.boot.start-runtime": "Démarrage du bureau",
-	"app.core.ui.search": "Recherche",
+	"app.ui.search": "Recherche",
 	"app.lthn.chain.daemons.lethean-blockchain-export": "Exportation de la blockchain",
 	"app.lthn.chain.daemons.lethean-blockchain-import": "Importation de blockchain",
 	"app.lthn.chain.daemons.lethean-wallet-cli": "Portefeuille CLI",

@@ -29,5 +29,5 @@ func TestExecute(t *testing.T) {
 	os.Stdout = old // restoring the real stdout
 	out := <-outC
 
-	assert.Equal(t, "Hello from the demo CLI!\n", out)
+	assert.Equal(t, "Hello from the i18n CLI!\n", out)
 }
