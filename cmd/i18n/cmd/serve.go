@@ -8,20 +8,25 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func setupRouter() http.Handler {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/api/v1/demo", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hello, world!")
+	})
+
+	fs := http.FileServer(http.Dir("./ui/dist/i18n-element/browser"))
+	mux.Handle("/", fs)
+	return mux
+}
+
 var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "Starts the HTTP server",
 	Long:  `Starts the HTTP server to serve the frontend and the API.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		http.HandleFunc("/api/v1/demo", func(w http.ResponseWriter, r *http.Request) {
-			fmt.Fprintf(w, "Hello, world!")
-		})
-
-		fs := http.FileServer(http.Dir("./ui/dist/core-element-template/browser"))
-		http.Handle("/", fs)
-
+		router := setupRouter()
 		log.Println("Listening on :8080...")
-		err := http.ListenAndServe(":8080", nil)
+		err := http.ListenAndServe(":8080", router)
 		if err != nil {
 			log.Fatal(err)
 		}

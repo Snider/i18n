@@ -4,7 +4,7 @@
 	"app.boot.loaded-runtime": "Приложение загружено",
 	"app.boot.server-check": "Проверка сервера",
 	"app.boot.start-runtime": "Запуск рабочего стола",
-	"app.core.ui.search": "Поиск",
+	"app.ui.search": "Поиск",
 	"app.lthn.chain.daemons.lethean-blockchain-export": "Блокчейн Экспорт",
 	"app.lthn.chain.daemons.lethean-blockchain-import": "Блокчейн Импорт",
 	"app.lthn.chain.daemons.lethean-wallet-cli": "Кошелек CLI",

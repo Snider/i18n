@@ -4,7 +4,7 @@
 	"app.boot.loaded-runtime": "应用程序已加载",
 	"app.boot.server-check": "检查服务器",
 	"app.boot.start-runtime": "启动桌面",
-	"app.core.ui.search": "搜索",
+	"app.ui.search": "搜索",
 	"app.lthn.chain.daemons.lethean-blockchain-export": "区块链导出",
 	"app.lthn.chain.daemons.lethean-blockchain-import": "区块链导入",
 	"app.lthn.chain.daemons.lethean-wallet-cli": "钱包命令行界面(CLI)",
