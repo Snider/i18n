@@ -1,11 +1,11 @@
-module github.com/Snider/i18n
+module github.com/snider/i18n/i18n
 
 go 1.24.3
 
 require (
-	github.com/nicksnyder/go-i18n/v2 v2.6.0
-	github.com/stretchr/testify v1.11.1
-	golang.org/x/text v0.31.0
+	github.com/nicksnyder/go-i18n/v2 v2.4.0
+	github.com/stretchr/testify v1.9.0
+	golang.org/x/text v0.16.0
 )
 
 require (

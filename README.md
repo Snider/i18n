@@ -23,6 +23,16 @@ This repository is a template for developers to create custom HTML elements. It 
     ```
     This will start the Go backend and serve the Angular custom element.
 
+## Usage
+
+To see how to use the `i18n` library in your own Go program, check out the example in the `examples/simple` directory.
+
+To run the example, use the following command:
+
+```bash
+go run ./examples/simple
+```
+
 ## Building the Custom Element
 
 To build the Angular custom element, run the following command:
