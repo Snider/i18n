@@ -58,3 +58,36 @@ func TestTranslate(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, "Bonjour", s.Translate("hello"))
 }
+
+func TestTranslate_Good(t *testing.T) {
+	s, err := New()
+	require.NoError(t, err)
+
+	s.SetBundle(newTestBundle())
+
+	err = s.SetLanguage("en")
+	require.NoError(t, err)
+	assert.Equal(t, "Hello", s.Translate("hello"))
+}
+
+func TestTranslate_Bad(t *testing.T) {
+	s, err := New()
+	require.NoError(t, err)
+
+	s.SetBundle(newTestBundle())
+
+	err = s.SetLanguage("en")
+	require.NoError(t, err)
+	assert.Equal(t, "non-existent", s.Translate("non-existent"))
+}
+
+func TestTranslate_Ugly(t *testing.T) {
+	s, err := New()
+	require.NoError(t, err)
+
+	s.SetBundle(newTestBundle())
+
+	err = s.SetLanguage("en")
+	require.NoError(t, err)
+	assert.Equal(t, "", s.Translate(""))
+}
