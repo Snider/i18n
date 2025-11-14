@@ -153,5 +153,6 @@
 	"words.time.past.months": " months ago",
 	"words.time.past.seconds": "a few seconds ago",
 	"words.time.past.year": "a year ago",
-	"words.time.past.years": "years ago"
+	"words.time.past.years": "years ago",
+	"hello": "Hello"
 }

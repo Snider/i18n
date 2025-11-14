@@ -19,10 +19,14 @@ func setupRouter() http.Handler {
 	return mux
 }
 
+// serveCmd represents the serve command
 var serveCmd = &cobra.Command{
 	Use:   "serve",
-	Short: "Starts the HTTP server",
-	Long:  `Starts the HTTP server to serve the frontend and the API.`,
+	Short: "Start the i18n web server",
+	Long: `Start the i18n web server.
+
+The server provides a web interface for translating messages. The server
+listens on port 8080 by default.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		router := setupRouter()
 		log.Println("Listening on :8080...")
