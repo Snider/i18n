@@ -1,3 +1,27 @@
+// Package i18n provides internationalization and localization services.
+//
+// It is designed to be a simple, straightforward i18n solution that should be
+// well-suited to most applications.
+//
+// # Getting Started
+//
+// To use the i18n service, you first need to create a new instance:
+//
+//	i18nService, err := i18n.New()
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//
+// Once you have a service instance, you can set the language and translate
+// messages.
+//
+// # Locales
+//
+// The i18n service loads locales from the `locales` directory. Locales are JSON
+// files with the language code as the filename (e.g., `en.json`, `es.json`).
+// The service uses the `embed` package to bundle the locales into the binary,
+// so you don't need to worry about distributing the locale files with your
+// application.
 package i18n
 
 import (
@@ -15,9 +39,11 @@ import (
 var localeFS embed.FS
 
 // Options holds configuration for the i18n service.
+// This is a placeholder for future configuration options.
 type Options struct{}
 
 // Service provides internationalization and localization.
+// It is the primary entrypoint for the i18n package.
 type Service struct {
 	bundle         *i18n.Bundle
 	localizer      *i18n.Localizer
@@ -50,6 +76,7 @@ func newI18nService() (*Service, error) {
 }
 
 // New creates a new i18n service.
+// The service is initialized with the English language as the default.
 func New() (*Service, error) {
 	s, err := newI18nService()
 	if err != nil {
@@ -106,6 +133,9 @@ func detectLanguage(supported []language.Tag) (string, error) {
 
 // --- Public Service Methods ---
 
+// SetLanguage sets the language for the i18n service.
+// The language tag should be a valid BCP 47 language tag (e.g., "en", "en-US").
+// If the language is not supported, an error is returned.
 func (s *Service) SetLanguage(lang string) error {
 	requestedLang, err := language.Parse(lang)
 	if err != nil {
@@ -127,6 +157,8 @@ func (s *Service) SetLanguage(lang string) error {
 	return nil
 }
 
+// Translate translates a message by its ID.
+// If the message is not found, the message ID is returned.
 func (s *Service) Translate(messageID string) string {
 	translation, err := s.localizer.Localize(&i18n.LocalizeConfig{MessageID: messageID})
 	if err != nil {

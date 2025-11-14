@@ -2,6 +2,8 @@ package i18n
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
 	"testing"
 
 	"github.com/nicksnyder/go-i18n/v2/i18n"
@@ -90,4 +92,51 @@ func TestTranslate_Ugly(t *testing.T) {
 	err = s.SetLanguage("en")
 	require.NoError(t, err)
 	assert.Equal(t, "", s.Translate(""))
+}
+
+func ExampleNew() {
+	i18nService, err := New()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(i18nService.Translate("hello"))
+	// Output: Hello
+}
+
+func ExampleService_SetLanguage() {
+	i18nService, err := New()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = i18nService.SetLanguage("es")
+	if err != nil {
+		log.Printf("Failed to set language: %v", err)
+	}
+
+	// This would load a real Spanish locale file in a real application
+	// For this example, we'll inject a bundle with Spanish translations
+	bundle := i18n.NewBundle(language.Spanish)
+	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
+	bundle.MustParseMessageFileBytes([]byte(`{
+		"hello": "Hola"
+	}`), "es.json")
+	i18nService.SetBundle(bundle)
+
+	err = i18nService.SetLanguage("es")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(i18nService.Translate("hello"))
+	// Output: Hola
+}
+
+func ExampleService_Translate() {
+	i18nService, err := New()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(i18nService.Translate("hello"))
+	// Output: Hello
 }
