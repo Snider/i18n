@@ -33,4 +33,11 @@ func main() {
 	// Translate the same message again.
 	searchMessage = service.Translate("app.ui.search")
 	fmt.Println(searchMessage)
+
+	// Translate with arguments.
+	// Note: You would need to add "greeting": "Hello {{.Name}}" to your locale files to make this work properly.
+	// Since we are using embedded locales in the library, we can't easily modify them here without rebuilding the lib.
+	// However, we can demonstrate the API usage.
+	greeting := service.Translate("greeting", map[string]string{"Name": "World"})
+	fmt.Println(greeting)
 }

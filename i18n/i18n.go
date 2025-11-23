@@ -158,9 +158,18 @@ func (s *Service) SetLanguage(lang string) error {
 }
 
 // Translate translates a message by its ID.
+// It accepts an optional template data argument to interpolate into the translation.
 // If the message is not found, the message ID is returned.
-func (s *Service) Translate(messageID string) string {
-	translation, err := s.localizer.Localize(&i18n.LocalizeConfig{MessageID: messageID})
+func (s *Service) Translate(messageID string, args ...interface{}) string {
+	config := &i18n.LocalizeConfig{MessageID: messageID}
+	if len(args) > 0 {
+		config.TemplateData = args[0]
+		if len(args) > 1 {
+			fmt.Fprintf(os.Stderr, "i18n: Translate called with %d arguments, expected at most 1 (template data)\n", len(args))
+		}
+	}
+
+	translation, err := s.localizer.Localize(config)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "i18n: translation for key \"%s\" not found\n", messageID)
 		return messageID
