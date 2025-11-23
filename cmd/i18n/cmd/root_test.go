@@ -22,11 +22,15 @@ func captureOutput(f func()) string {
 		done <- true
 	}()
 
+	defer func() {
+		w.Close()
+		os.Stdout = oldStdout
+	}()
+
 	f()
 
 	w.Close()
 	<-done
-	os.Stdout = oldStdout
 	return buf.String()
 }
 

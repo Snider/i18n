@@ -164,6 +164,9 @@ func (s *Service) Translate(messageID string, args ...interface{}) string {
 	config := &i18n.LocalizeConfig{MessageID: messageID}
 	if len(args) > 0 {
 		config.TemplateData = args[0]
+		if len(args) > 1 {
+			fmt.Fprintf(os.Stderr, "i18n: Translate called with %d arguments, expected at most 1 (template data)\n", len(args))
+		}
 	}
 
 	translation, err := s.localizer.Localize(config)
