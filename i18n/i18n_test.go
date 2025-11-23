@@ -16,10 +16,12 @@ func newTestBundle() *i18n.Bundle {
 	bundle := i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
 	bundle.MustParseMessageFileBytes([]byte(`{
-		"hello": "Hello"
+		"hello": "Hello",
+		"welcome": "Welcome {{.Name}}"
 	}`), "en.json")
 	bundle.MustParseMessageFileBytes([]byte(`{
-		"hello": "Bonjour"
+		"hello": "Bonjour",
+		"welcome": "Bienvenue {{.Name}}"
 	}`), "fr.json")
 	return bundle
 }
@@ -59,6 +61,21 @@ func TestTranslate(t *testing.T) {
 	err = s.SetLanguage("fr")
 	require.NoError(t, err)
 	assert.Equal(t, "Bonjour", s.Translate("hello"))
+}
+
+func TestTranslate_WithArgs(t *testing.T) {
+	s, err := New()
+	require.NoError(t, err)
+
+	s.SetBundle(newTestBundle())
+
+	err = s.SetLanguage("en")
+	require.NoError(t, err)
+	assert.Equal(t, "Welcome John", s.Translate("welcome", map[string]string{"Name": "John"}))
+
+	err = s.SetLanguage("fr")
+	require.NoError(t, err)
+	assert.Equal(t, "Bienvenue John", s.Translate("welcome", map[string]string{"Name": "John"}))
 }
 
 func TestTranslate_Good(t *testing.T) {

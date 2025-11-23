@@ -9,25 +9,40 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestExecute(t *testing.T) {
-	old := os.Stdout // keep backup of the real stdout
+func captureOutput(f func()) string {
+	oldStdout := os.Stdout
 	r, w, _ := os.Pipe()
 	os.Stdout = w
 
-	Execute()
+	var buf bytes.Buffer
+	done := make(chan bool)
 
-	outC := make(chan string)
-	// copy the output in a separate goroutine so printing can't block indefinitely
 	go func() {
-		var buf bytes.Buffer
 		io.Copy(&buf, r)
-		outC <- buf.String()
+		done <- true
 	}()
 
-	// back to normal state
-	w.Close()
-	os.Stdout = old // restoring the real stdout
-	out := <-outC
+	f()
 
-	assert.Equal(t, "Hello from the i18n CLI!\n", out)
+	w.Close()
+	<-done
+	os.Stdout = oldStdout
+	return buf.String()
+}
+
+func TestRootCmd(t *testing.T) {
+	output := captureOutput(func() {
+		rootCmd.SetArgs([]string{})
+		rootCmd.Execute()
+	})
+
+	assert.Contains(t, output, "Hello from the i18n CLI!")
+}
+
+// Note: Testing Execute() directly is hard because it calls os.Exit(1) on failure.
+// But we can test that rootCmd exists and has correct fields.
+func TestRootCmdConfig(t *testing.T) {
+	assert.Equal(t, "i18n", rootCmd.Use)
+	assert.NotEmpty(t, rootCmd.Short)
+	assert.NotEmpty(t, rootCmd.Long)
 }
